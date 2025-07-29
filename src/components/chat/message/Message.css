@@ -1,0 +1,88 @@
+.message-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.message-row.right {
+    justify-content: flex-end;
+}
+
+.message-row.left {
+    justify-content: flex-start;
+}
+
+.avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+}
+
+.message-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 60%;
+}
+
+.text-message {
+    padding: 8px 14px;
+    border-radius: 16px;
+    font-size: 14px;
+    margin: 0;
+}
+
+.text-message.sender {
+    background-color: #3b82f6;
+    color: white;
+    border-top-left-radius: 0;
+}
+
+.text-message.receiver {
+    background-color: #e5e7eb;
+    border-top-right-radius: 0;
+}
+
+.text-message .sender-name {
+    color: #3b82f6;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.text-message .text {
+    margin-top: 4px;
+}
+
+.message-image {
+    width: 160px;
+    height: 160px;
+    border-radius: 16px;
+    object-fit: cover;
+}
+
+.message-image.sender {
+    border-top-left-radius: 0;
+}
+
+.message-image.receiver {
+    border-top-right-radius: 0;
+}
+
+.message-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.timestamp {
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+.read {
+    color: #3b82f6;
+}
+
+.unread {
+    color: #9ca3af;
+}

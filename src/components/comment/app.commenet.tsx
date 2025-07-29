@@ -24,7 +24,7 @@ const CommentItem = ({ comment, token, songID }: IProp) => {
     const handleSubmitComment = async () => {
         try {
             if (wavesurferRef?.current) {
-                const res = await sendRequest<IBackendRes<IComment>>({
+                await sendRequest<IBackendRes<IComment>>({
                     url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/comments`,
                     method: "POST",
                     headers: {

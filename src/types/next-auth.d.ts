@@ -18,6 +18,7 @@ declare module "next-auth" {
         "followers": string[],
         "following": string[],
         "shared": string[],
+        "socketId": string
     }
 }
 
@@ -39,6 +40,7 @@ declare module "next-auth" {
             "followers": string[],
             "following": string[],
             "shared": string[],
+            "socketId": string
         }
     }
 

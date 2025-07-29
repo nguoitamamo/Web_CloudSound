@@ -18,10 +18,6 @@ interface IProp {
 
 const StatusSong = ({ song, session }: IProp) => {
 
-    // const { currentSong, setCurrentSong } = useSongContext();
-    // const router = useRouter();
-
-    console.log(">> check song ỏ status ", song);
 
     const [likeCount, setLikeCount] = useState(song?.like?.length || 0);
     const [dislikeCount, setDisLikeCount] = useState(song?.dislike?.length || 0);

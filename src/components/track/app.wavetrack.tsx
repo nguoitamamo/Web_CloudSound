@@ -302,7 +302,7 @@ const WaveTrack = (props: IProp) => {
             if (duration > 0 && (currentTime / duration) >= 0.1 && !hasTrackedViewRef.current) {
                 try {
                     const update = await sendRequest<IBackendRes<any>>({
-                        url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/songs/${props.song._id}`,
+                        url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/songs/updateview/${props.song._id}`,
                         method: 'PATCH',
                         headers: {
                             Authorization: `Bearer ${session.user.access_token}`

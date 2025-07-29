@@ -28,6 +28,8 @@ import { useRouter } from 'next/navigation';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import HistoryIcon from '@mui/icons-material/History';
+import Chat from '../chat/chat.menu';
+import socket from '@/config/socket';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -101,6 +103,20 @@ export default function Header() {
     const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
+
+    const handleDisOnline = () => {
+        if (session?.user) {
+
+            if (!socket.connect()) {
+                socket.connect()
+            }
+            socket.emit("logout", {
+                userID: session.user._id,
+                socketId: socket.id,
+            });
+
+        }
+    }
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -209,7 +225,10 @@ export default function Header() {
             </MenuItem>
 
             <MenuItem
-                onClick={() => signOut()}
+                onClick={() => {
+                    signOut(),
+                        handleDisOnline()
+                }}
             >
                 <ListItemIcon>
                     <Logout fontSize="small" />
@@ -339,9 +358,10 @@ export default function Header() {
                         }}>
                             {session ?
                                 <>
-                                    <Link href={`/utils/${2}`}  >
-                                        Danh sách phát</Link>
+                                    {/* <Link href={`/utils/${2}`}  >
+                                        Danh sách phát</Link> */}
                                     <Link href="/track/upload">Upload</Link>
+                                    <Chat />
                                     <Link href={`/profile/${session?.user?._id}`}>{session?.user?.name}</Link>
                                     <Avatar sx={{ width: 32, height: 32 }} onClick={handleProfileMenuOpen}
                                         src={`${process.env.NEXT_PUBLIC_BACKEND_URL_ASSET}/image/user/${session?.user?.avatar}`}

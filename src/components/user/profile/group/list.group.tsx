@@ -26,7 +26,7 @@ const ListGroup = () => {
                     }
                 });
                 if (res?.data) {
-                    console.log('>> check aa', res?.data);
+                   
                     setData(res.data);
                 }
             } catch (error) {

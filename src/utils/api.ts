@@ -5,7 +5,7 @@ export const sendRequest = async <T>(props: IRequest) => {
         url,
         method,
         body,
-        queryParams = {},
+        // queryParams = {},
         useCredentials = false,
         headers = {},
         nextOption = {}
@@ -20,9 +20,9 @@ export const sendRequest = async <T>(props: IRequest) => {
     };
     if (useCredentials) options.credentials = "include";
 
-    if (queryParams) {
-        url = `${url}?${queryString.stringify(queryParams)}`;
-    }
+    // if (queryParams) {
+    //     url = `${url}?${queryString.stringify(queryParams)}`;
+    // }
 
     return fetch(url, options).then(res => {
         if (res.ok) {

@@ -14,7 +14,7 @@ const HomePage = async () => {
 
   const session = await getServerSession(authOptions);
   const type = 'week';
-  console.log(session);
+
 
 
   const songTrending = await sendRequest<IBackendRes<ISong[]>>({
@@ -22,6 +22,9 @@ const HomePage = async () => {
     method: "GET",
   })
 
+
+
+  // _app.tsx hoặc trong component chính
 
 
 
@@ -33,6 +36,8 @@ const HomePage = async () => {
         display: 'flex',
         justifyContent: 'space-evenly',
       }}>
+
+
         <Box sx={{ flex: 7 }}>
           <MainSlider data={songTrending?.data ?? []} type={type} />
         </Box>

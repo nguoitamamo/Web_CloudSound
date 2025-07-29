@@ -33,7 +33,7 @@ import { authOptions } from "./app/api/auth/[...nextauth]/route";
 
 export default withAuth(
     function middleware(req) {
-        console.log(">> check req", req)
+     
         const { pathname } = req.nextUrl;
 
         const res = req.nextauth.token;

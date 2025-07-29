@@ -194,7 +194,73 @@ declare global {
 
     interface IBasicUser {
         "_id": string,
-        "name": string
+        "name": string,
+        "socketId": string,
+        "avatar": string,
+    }
+
+
+
+    interface Message {
+        "user": IBasicUser,
+        "timeSent": string,
+        "message": string
+        "roomName": string
+    }
+
+
+    interface UserType {
+        _id: string;
+        name: string;
+        email: string;
+        avatar: string;
+    }
+
+
+    interface ChatType {
+        _id: string;
+        users: UserType[];
+        createdBy: UserType;
+        lastMessage: MessageType;
+        isGroupChat: boolean;
+        groupName: string;
+        groupProfilePicture: string;
+        groupBio: string;
+        groupAdmins: UserType[];
+        unreadCounts: any;
+        createdAt: string;
+        updatedAt: string;
+    }
+
+    interface MessageType {
+        _id: string;
+        socketMessageId: string;
+        chat: ChatType;
+        sender: UserType;
+        text: string;
+        image: string;
+        readBy: string[];
+        createdAt: string;
+        updatedAt: string;
+    }
+
+    interface IChat {
+        _id: string,
+        users: UserType[],
+        lastMessageAt: Date,
+        createdBy: UserType,
+        isGroupChat: boolean,
+        groupName: string,
+        groupProfilePicture: string,
+        groupBio: string,
+        groupAdmins: string[],
+        isDeleted: boolean,
+        deletedAt: Date | null,
+        createdAt: Date,
+        updatedAt: Date,
+        lastMessage: MessageType,
+        unreadCounts: string[]
+
     }
 
     interface IWaveSurferContextValue {

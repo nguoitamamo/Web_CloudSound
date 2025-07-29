@@ -6,6 +6,7 @@ import { Container } from '@mui/material';
 import ProgressProviders from '@/components/lib/ProgressBarProvider';
 import { ToastProvider } from '@/components/lib/toast';
 import { SongProvider } from '@/components/track/context.viewtrack';
+import ReduxProvider from '@/components/redux/redux-provider';
 
 
 
@@ -20,13 +21,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <ProgressProviders>
                         <NextAuth>
                             <WaveSurferProvider>
-                                <SongProvider>
-                                    <ToastProvider>
-                                        <Container>
-                                            {children}
-                                        </Container>
-                                    </ToastProvider>
-                                </SongProvider>
+                                <ReduxProvider>
+                                    <SongProvider>
+
+                                        <ToastProvider>
+
+                                            <Container>
+                                                {children}
+                                            </Container>
+                                        </ToastProvider>
+                                    </SongProvider>
+                                </ReduxProvider>
                             </WaveSurferProvider>
                         </NextAuth>
                     </ProgressProviders>

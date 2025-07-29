@@ -6,7 +6,7 @@ import { Box, Button, Tooltip, Typography } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { sendRequest } from "@/utils/api";
 import { IconButton } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -15,6 +15,9 @@ import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 
 import { useSession } from "next-auth/react"
 import { useToast } from "../lib/toast";
+import socket from "@/config/socket";
+import { useDispatch } from "react-redux";
+import { SetOnlineUsers } from "../redux/userSlice";
 
 
 interface IProp {
@@ -30,6 +33,28 @@ const MainSlider = (props: IProp) => {
     const { data: session } = useSession();
 
     const toast = useToast()
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (session?.user) {
+
+            if (!socket.connect()) {
+                socket.connect()
+            }
+
+
+            socket.emit("join", {
+                userID: session.user._id,
+                socketId: socket.id,
+            });
+
+            socket.on("online-users-updated", (onlineUsers: string[]) => {
+                dispatch(SetOnlineUsers(onlineUsers));
+            });
+        }
+    }, [session?.user]);
+
+
 
     const SampleNextArrow = (props: any) => {
 

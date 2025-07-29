@@ -9,8 +9,7 @@ const PlayListPage = async (props: any) => {
     const session = await getServerSession(authOptions);
 
     const { params } = props;
-    console.log(">> Check params", params.slug)
-
+   
     return (
         <Container>
             <Playlist tabStart={parseInt(params.slug) || 0} />

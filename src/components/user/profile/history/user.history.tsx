@@ -31,7 +31,7 @@ const HistoryItem = () => {
                 })
                 if (res?.data) {
                     setHistory(res?.data);
-                    console.log(res?.data);
+                   
                 }
             }
             catch (error) {

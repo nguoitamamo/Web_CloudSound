@@ -28,7 +28,7 @@ const PlaylistItem = () => {
                 })
                 if (res?.data) {
                     setPlaylist(res?.data);
-                    console.log(res?.data);
+                    
                 }
             }
             catch (error) {
