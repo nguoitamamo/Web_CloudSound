@@ -31,7 +31,7 @@ const HistoryItem = () => {
                 })
                 if (res?.data) {
                     setHistory(res?.data);
-                   
+
                 }
             }
             catch (error) {
@@ -79,8 +79,10 @@ const HistoryItem = () => {
                             ref={(player) => {
                                 if (player) {
                                     audioRefs.current[index] = player.audio.current;
-                                    if (audioRefs.current[index])
-                                        audioRefs.current[index].currentTime = historyItem.start;
+                                    const audio = audioRefs.current[index];
+                                    if (audio) {
+                                        audio.currentTime = historyItem.start;
+                                    }
                                 }
                             }}
                             onPlay={() => {
