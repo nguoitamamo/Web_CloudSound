@@ -1,0 +1,13 @@
+{
+  "/favicon.ico/route": "/favicon.ico",
+  "/api/route": "/api",
+  "/(user)/page": "/",
+  "/api/auth/[...nextauth]/route": "/api/auth/[...nextauth]",
+  "/(user)/profile/[slug]/page": "/profile/[slug]",
+  "/(user)/detail/[slug]/page": "/detail/[slug]",
+  "/(user)/search/[slug]/page": "/search/[slug]",
+  "/(user)/track/upload/page": "/track/upload",
+  "/(user)/track/[slug]/page": "/track/[slug]",
+  "/(user)/utils/[slug]/page": "/utils/[slug]",
+  "/(guest)/auth/signin/page": "/auth/signin"
+}
