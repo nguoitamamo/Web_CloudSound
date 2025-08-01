@@ -1,6 +1,7 @@
 'use client';
 import { Box, Button, Typography } from "@mui/material";
 import { useState } from "react";
+import QRPaymentModal from "../qr/app.qr";
 
 const vipDescriptions: Record<string, string> = {
     'Vip 1': `Nghe được bài hát vip, tạo group user tối đa 5 user`,
@@ -10,6 +11,9 @@ const vipDescriptions: Record<string, string> = {
 
 const Vip = () => {
     const [selectedVip, setSelectedVip] = useState<'Vip 1' | 'Vip 2' | 'Vip 3'>('Vip 1');
+    const [open, setOpen] = useState(false);
+
+
 
     return (
         <Box sx={{ mt: 3 }}>
@@ -47,6 +51,8 @@ const Vip = () => {
                 ))}
             </Box>
 
+
+            <QRPaymentModal  open={open} setOpen={setOpen}/>
             <Typography variant="body1"
                 sx={{
                     padding: 5,
@@ -56,7 +62,9 @@ const Vip = () => {
                     borderRadius: '10px'
                 }}>
                 {vipDescriptions[selectedVip]}
-                <Button>Mua</Button>
+                <Button onClick={() => {
+                    setOpen(true)
+                }}>Mua</Button>
             </Typography>
         </Box>
     );
