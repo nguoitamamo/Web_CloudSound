@@ -1313,7 +1313,7 @@ const HomePage = async ()=>{
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [587,926,289,937,916,108,730,656,30,826,889], () => (__webpack_exec__(73225)));
+var __webpack_exports__ = __webpack_require__.X(0, [587,926,289,937,916,108,730,661,30,826,889], () => (__webpack_exec__(73225)));
 module.exports = __webpack_exports__;
 
 })();
