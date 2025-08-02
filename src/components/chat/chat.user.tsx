@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Avatar, IconButton, TextField } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import CallIcon from '@mui/icons-material/Call';
 import SendIcon from '@mui/icons-material/Send';
 import './FloatingChatBox.css';
 
@@ -16,6 +17,11 @@ import { SetCurrentUser, UserState } from '../redux/userSlice';
 import Messages from './message/messages';
 import Message from './message/message';
 import dayjs from 'dayjs';
+import Call from '../modal/all.modal';
+import { SocketAddress } from 'net';
+import { setIncomingCall } from '../redux/callSlice';
+
+
 
 interface Props {
     onClose: () => void;
@@ -25,12 +31,12 @@ interface Props {
 const FloatingChatBox: React.FC<Props> = ({ onClose }) => {
 
     const { data: session } = useSession();
-
+    const router = useRouter();
 
     const [content, setContent] = React.useState('');
     const [messages, setMessages] = React.useState<MessageType[]>([]);
 
-    const [loading, setLoading] = React.useState(false);
+    const [isCalling, setIsCalling] = useState(false);
 
     const { selectedChat, chats }: ChatState = useSelector(
         (state: any) => state.chat
@@ -42,7 +48,6 @@ const FloatingChatBox: React.FC<Props> = ({ onClose }) => {
 
     const getMessages = async () => {
         try {
-            setLoading(true);
             console.log(">> check chat", selectedChat);
 
             const res = await sendRequest<IBackendRes<MessageType[]>>({
@@ -58,8 +63,6 @@ const FloatingChatBox: React.FC<Props> = ({ onClose }) => {
 
         } catch (error: any) {
             console.log(error);
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -70,27 +73,34 @@ const FloatingChatBox: React.FC<Props> = ({ onClose }) => {
     const onSend = async () => {
         try {
             if (!content) return;
-            setLoading(true);
 
             if (!socket.connect()) {
                 socket.connect()
             }
-            // let image = "";
-            // if (selectedImageFile) {
-            //     image = await UploadImageToFirebaseAndReturnUrl(selectedImageFile);
-            // }
             if (session?.user) {
 
-                const socketPayload = {
+                // const socketPayload = {
+                //     text: content,
+                //     image: '',
+                //     socketMessageId: dayjs().unix(),
+                //     chat: selectedChat,
+                // };
+
+                const socketMes = {
                     text: content,
                     image: '',
                     socketMessageId: dayjs().unix(),
-                    chat: selectedChat?._id,
-                    sender: session?.user._id
+                    chat: selectedChat,
+                    sender: {
+                        _id: session.user._id,
+                        name: session.user.name,
+                        email: session.user.email,
+                        avatar: session.user.avatar,
+                    }
                 };
 
                 // send message using socket
-                socket.emit("send-new-message", socketPayload);
+                socket.emit("send-new-message", socketMes);
                 setContent("");
 
                 await sendRequest<IBackendRes<any>>({
@@ -99,21 +109,12 @@ const FloatingChatBox: React.FC<Props> = ({ onClose }) => {
                     headers: {
                         Authorization: `Bearer ${session?.user?.access_token}`
                     },
-                    body: socketPayload
-                })
-
-                const socketMes = {
-                    text: content,
-                    image: '',
-                    socketMessageId: dayjs().unix(),
-                    chat: selectedChat?._id,
-                    sender: {
-                        _id: session.user._id,
-                        name: session.user.name,
-                        email: session.user.email,
-                        avatar: session.user.avatar,
+                    body: {
+                        text: content,
+                        image: '',
+                        chat: selectedChat?._id,
                     }
-                };
+                })
 
                 setMessages((prev: any) =>
                     [...prev, socketMes]
@@ -124,8 +125,6 @@ const FloatingChatBox: React.FC<Props> = ({ onClose }) => {
 
         } catch (error: any) {
             console.log(error);
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -148,94 +147,58 @@ const FloatingChatBox: React.FC<Props> = ({ onClose }) => {
             }
         });
 
+        // socket.on("incoming-call", (data: InfoCallUser) => {
+        //     dispatch(setIncomingCall(data))
+        // });
 
-        // listen for user-read-all-chat-messages event
-        socket.on(
-            "user-read-all-chat-messages",
-            ({ chatId, readByUserId }: { chatId: string; readByUserId: string }) => {
-                if (selectedChat?._id === chatId) {
-                    setMessages((prev) => {
-                        const newMessages = prev.map((msg) => {
-                            if (
-                                msg.sender._id !== readByUserId &&
-                                !msg.readBy.includes(readByUserId)
-                            ) {
-                                return { ...msg, readBy: [...msg.readBy, readByUserId] };
-                            }
-                            return msg;
-                        });
 
-                        return newMessages;
-                    });
-                }
-            }
-        );
+        socket.on('reject-call-user', (data: boolean) => {
+            console.log(">> Check reject ở client call")
+            setIsCalling(data);
+        })
+
+
+        socket.on('received-call-accepted', (data: InfoCallUser) => {
+            setIsCalling(false);
+            router.push('call')
+        })
 
     }, [selectedChat])
 
 
 
 
-
-
     useEffect(() => {
-        // messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+
         if (messagesEndRef.current)
             messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight + 100;
 
-        // if (!socket.connect()) {
-        //     socket.connect();
-        // }
 
-
-        // let unreadMessages = 0;
-        // let chat = chats.find((chat) => chat._id === selectedChat?._id);
-        // if (chat && chat.unreadCounts) {
-        //     unreadMessages = chat?.unreadCounts[currentUserData?._id!] || 0;
-        // }
-
-        // if (unreadMessages > 0) {
-        //     sendRequest<IBackendRes<any>>({
-        //         url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/messages/all?chatID=${selectedChat?._id}`,
-        //         method: "GET",
-        //         headers: {
-        //             Authorization: `Bearer ${session?.user?.access_token}`
-        //         },
-        //     })
-
-        //     socket.emit("read-all-messages", { // cập nhật unread
-        //         chatId: selectedChat?._id!,
-        //         readByUserId: session?.user?._id!,
-        //         users: selectedChat?.users
-        //             .filter((user) => user._id !== session?.user?._id!)
-        //             .map((user) => user._id),
-        //     });
-        // }
-
-        // // set the unread messages to 0 for the selected chat
-        // const newChats = chats.map((chat) => {
-        //     if (chat._id === selectedChat?._id) {
-        //         let chatData = { ...chat };
-        //         chatData.unreadCounts = { ...chat.unreadCounts };
-        //         chatData.unreadCounts[currentUserData?._id!] = 0;
-        //         return chatData;
-        //     } else return chat;
-        // });
-
-        // dispatch(SetChats(newChats));
     }, [messages]);
 
 
-    useEffect(() => {
-        if (!socket.connect()) {
+    const handleEmitCallUser = () => {
+        if (!socket.connected) {
             socket.connect();
         }
-        socket.emit("typing", {
-            chat: selectedChat,
-            senderId: currentUserData?._id!,
-            senderName: currentUserData?.name.split(" ")[0],
-        });
-    }, [selectedChat, content]);
+
+        if (!session?.user._id || !currentUserData?._id || !selectedChat?._id) return;
+
+        const info: InfoCallUser = {
+            fromUserID: session.user._id,
+            ToUserID: currentUserData._id,
+            callerName: session.user.name,
+            callerAvatar: session.user.avatar,
+            receivedName: currentUserData.name,
+            receivedAvatar: currentUserData.avatar,
+            chatID: selectedChat._id,
+            socketID: socket.id
+        };
+        dispatch(setIncomingCall(info));
+        socket.emit('call-user', info);
+
+    };
+
 
     return (
         <div className="chat-box">
@@ -246,6 +209,12 @@ const FloatingChatBox: React.FC<Props> = ({ onClose }) => {
                         src={`${process.env.NEXT_PUBLIC_BACKEND_URL_ASSET}/image/user/${currentUserData?.avatar}`}
                     />
                     <span>{currentUserData?.name}</span>
+                    <IconButton color="primary" onClick={() => {
+                        setIsCalling(true),
+                            handleEmitCallUser()
+                    }}>
+                        <CallIcon />
+                    </IconButton>
                 </div>
                 <IconButton size="small" onClick={onClose}>
                     <CloseIcon style={{ color: 'white' }} />
@@ -282,6 +251,15 @@ const FloatingChatBox: React.FC<Props> = ({ onClose }) => {
                     <SendIcon />
                 </IconButton>
             </div>
+
+            <Call
+                open={isCalling}
+                onClose={() => setIsCalling(false)}
+                callee={{
+                    name: currentUserData?.name || '',
+                    avatar: currentUserData?.avatar || ''
+                }}
+            />
         </div>
     );
 };

@@ -17,7 +17,7 @@ interface IProps {
     setSelectedUser: (v: UserType) => void;
     setAnchorEl: (v: null | HTMLElement) => void;
     search: string;
-    chats: IChat[]
+    chats: ChatType[]
 }
 
 
@@ -36,8 +36,8 @@ const SearChChatUser = ({ users, setSelectedUser, setAnchorEl, search, chats }: 
     const usedispath = useDispatch();
 
 
-    const handleOnclickUser = async (user: UserType, chat: IChat) => {
-
+    const handleOnclickUser = async (user: UserType, chat: ChatType) => {
+        console.log(">>> chec daon chat curr", chat);
 
 
         const res = await sendRequest<IBackendRes<boolean | ChatType>>({
@@ -63,19 +63,10 @@ const SearChChatUser = ({ users, setSelectedUser, setAnchorEl, search, chats }: 
 
         setAnchorEl(null);
 
-        if (!socket.connect()) {
-            socket.connect()
-        }
-
-        socket.emit("read-all-messages", { // cập nhật unread
-            chatId: chat?._id!,
-            readByUserId: session?.user?._id!,
-            users: chat?.users
-                .filter((user) => user._id !== session?.user?._id!)
-                .map((user) => user._id),
-        });
 
     }
+
+
 
     return (
         <List dense>

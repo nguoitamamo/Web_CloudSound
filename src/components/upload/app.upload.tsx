@@ -3,6 +3,7 @@ import { Avatar, Box, Typography, Tabs, Tab, Tooltip } from '@mui/material'
 import { useState } from 'react';
 import StepOne from './step/app.step1';
 import StepSecond from './step/app.step2';
+import Album from './album/app.album';
 
 
 
@@ -50,10 +51,12 @@ const UploadTrack = () => {
                 TabIndicatorProps={{ style: { backgroundColor: 'white', border: '2px dashed', borderRadius: 5 } }}
             >
                 <Tab label="Bài hát" {...a11yProps(0)}
-                    disabled={tab !== 0}
+
                 />
                 <Tab label="Thông tin chi tiết" {...a11yProps(1)}
-                    disabled={tab !== 1}
+
+                />
+                <Tab label="Album" {...a11yProps(2)}
                 />
             </Tabs>
 
@@ -64,6 +67,10 @@ const UploadTrack = () => {
 
             <TabPanel value={tab} index={1}>
                 <StepSecond percent={percent} songUpload={songUpload} setSongUpload={setSongUpload} setTab={setTab} />
+            </TabPanel>
+
+            <TabPanel value={tab} index={2}>
+                <Album />
             </TabPanel>
         </Box>
     );

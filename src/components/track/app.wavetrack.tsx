@@ -133,9 +133,14 @@ const WaveTrack = (props: IProp) => {
         });
 
         const unsubscribePlay = ws.on('play', () => {
+            if (props.song?.isVip && (session === null || session === undefined)) {
+                toast.error('Bạn chưa đăng nhập không thể nghe bài hát VIP');
+                ws.pause();
+            }
             if (props.song?.isVip && session?.user) {
                 // const isAuthor = checkActor({ user: props.song.users, propUserID: session.user._id });
                 // const isVIP = checkRole(session.user.role);
+
 
 
                 if (!isListen({
@@ -382,23 +387,17 @@ const WaveTrack = (props: IProp) => {
                 <Box sx={{ display: 'flex', alignContent: 'space-around' }}>
                     <IconButton
                         disabled={
-                            props.song.isVip &&
-                            session?.user &&
+                            (props.song.isVip && (session === null || session === undefined)) ||
+                            (props.song.isVip && session?.user) &&
                             !isListen({
                                 user: props.song.users,
                                 role: session.user.role,
                                 propUserID: session.user._id,
                                 songID: props.song._id,
-                                shared: session?.user?.shared
+                                shared: session.user?.shared
                             })}
                         onClick={() => {
 
-                            // if (props.song?.isVip) {
-                            //     if (session?.user && !(session?.user?.role?.length > 1) && wavesurferRef.current) {
-                            //         setOpen(true); // mở modal
-                            //         wavesurferRef.current.pause();
-                            //     }
-                            // }
 
                             onPlayClick();
                             handleAddHistory();

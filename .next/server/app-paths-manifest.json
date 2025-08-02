@@ -1,13 +1,6 @@
 {
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/api/route": "app/api/route.js",
   "/(user)/page": "app/(user)/page.js",
+  "/(user)/call/page": "app/(user)/call/page.js",
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
-  "/(user)/detail/[slug]/page": "app/(user)/detail/[slug]/page.js",
-  "/(user)/profile/[slug]/page": "app/(user)/profile/[slug]/page.js",
-  "/(user)/search/[slug]/page": "app/(user)/search/[slug]/page.js",
-  "/(user)/track/upload/page": "app/(user)/track/upload/page.js",
-  "/(user)/track/[slug]/page": "app/(user)/track/[slug]/page.js",
-  "/(user)/utils/[slug]/page": "app/(user)/utils/[slug]/page.js",
   "/(guest)/auth/signin/page": "app/(guest)/auth/signin/page.js"
 }

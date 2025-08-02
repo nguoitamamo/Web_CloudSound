@@ -43,6 +43,8 @@ interface Iinfo extends IProps {
     shared: string[];
 }
 export const isListen = ({ user, role, propUserID, songID, shared }: Iinfo) => {
+
+
     const isAuthor = checkActor({ user: user, propUserID: propUserID });
     const isVIP = checkRole(role);
     const isShared = checkShared({ songID: songID, shared: shared })

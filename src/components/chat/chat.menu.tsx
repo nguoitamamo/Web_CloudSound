@@ -21,7 +21,7 @@ export default function Chat() {
     const open = Boolean(anchorEl);
 
     const [users, setUsers] = React.useState<UserType[]>([])
-    const [chat, setChat] = React.useState<IChat[]>([])
+    const [chat, setChat] = React.useState<ChatType[]>([])
     const [selectedUser, setSelectedUser] = React.useState<any | null>(null);
 
 
@@ -39,7 +39,7 @@ export default function Chat() {
 
 
     const handleGetChatWithUser = async () => {
-        const res = await sendRequest<IBackendRes<IChat[]>>({
+        const res = await sendRequest<IBackendRes<ChatType[]>>({
             url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/chats`,
             method: "GET",
             headers: {
@@ -115,7 +115,12 @@ export default function Chat() {
                         onChange={(e) => {
                             setSearch(e.target.value)
                         }}
-                        onClick={() => handleGetAllUser()}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' && !e.shiftKey) {
+                                e.preventDefault();
+                                
+                            }
+                        }}
                     />
                 </div>
                 <Divider />

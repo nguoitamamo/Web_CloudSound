@@ -165,7 +165,7 @@ export default function Header() {
                     }
                 }}>
                 <Avatar />
-                <Link href={`/profile/${session?.user?._id}`}>Trang cá nhân</Link>
+                <Link href={`/detail/${session?.user?._id}`}>Trang cá nhân</Link>
             </MenuItem>
             <Divider />
             <MenuItem
@@ -362,7 +362,7 @@ export default function Header() {
                                         Danh sách phát</Link> */}
                                     <Link href="/track/upload">Upload</Link>
                                     <Chat />
-                                    <Link href={`/profile/${session?.user?._id}`}>{session?.user?.name}</Link>
+                                    <Link href={`/detail/${session?.user?._id}`}>{session?.user?.name}</Link>
                                     <Avatar sx={{ width: 32, height: 32 }} onClick={handleProfileMenuOpen}
                                         src={`${process.env.NEXT_PUBLIC_BACKEND_URL_ASSET}/image/user/${session?.user?.avatar}`}
                                     />

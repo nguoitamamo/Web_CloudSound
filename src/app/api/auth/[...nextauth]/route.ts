@@ -171,19 +171,6 @@ export const authOptions: AuthOptions = {
                 session.user.shared = token.shared;
 
 
-                socket.on('connect', () => {
-
-                    session.user.socketId = socket.id;
-                    socket.emit('join_room', {
-                        roomName: session.user._id,
-                        user: {
-                            socketId: session.user.socketId,
-                            _id: session.user._id,
-                            name: session.user.name,
-                            avatar: session.user.avatar
-                        },
-                    });
-                });
 
 
             }

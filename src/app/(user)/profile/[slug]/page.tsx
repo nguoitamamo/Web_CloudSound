@@ -1,12 +1,14 @@
+import Base from "@/components/user/profile/base/user.base";
+import { Container } from "@mui/material";
 
 
 const ProfilePage = () => {
     return (
 
-        <div>
-            profile ProfilePage
-        </div>
+        <Container>
+            <Base />
 
+        </Container>
     )
 
 
