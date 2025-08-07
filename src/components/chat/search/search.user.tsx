@@ -37,7 +37,7 @@ const SearChChatUser = ({ users, setSelectedUser, setAnchorEl, search, chats }: 
 
 
     const handleOnclickUser = async (user: UserType, chat: ChatType) => {
-        console.log(">>> chec daon chat curr", chat);
+
 
 
         const res = await sendRequest<IBackendRes<boolean | ChatType>>({

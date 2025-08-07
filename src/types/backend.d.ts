@@ -1,7 +1,7 @@
 export { };
 // https://bobbyhadz.com/blog/typescript-make-types-global#declare-global-types-in-typescript
 
-
+import Peer from 'simple-peer'
 
 
 
@@ -299,6 +299,45 @@ declare global {
         currentTime: number;
     }
 
+
+    interface PeerData {
+        peerConnection: Peer.Instance,
+        stream: MediaStream | undefined,
+        userID: string,
+        socketID: string
+
+    }
+
+    interface ICall {
+        _id: string,
+        callID: string,
+        adminID: {
+            _id: string,
+            name: string,
+            avatar: string
+        }
+    }
+
+    interface IZoom {
+        _id: string,
+        name: string,
+        adminID: string,
+        chat: {
+            _id: string,
+            users: [
+                {
+                    _id: string,
+                    name: string,
+                    avatar: string,
+                }
+            ]
+        },
+        isDeleted: boolean,
+        deletedAt: null | Date,
+        createdAt: Date,
+        updatedAt: Date,
+
+    }
 
 
     interface UserInfoUpdateRole {

@@ -165,7 +165,7 @@ export default function Header() {
                     }
                 }}>
                 <Avatar />
-                <Link href={`/detail/${session?.user?._id}`}>Trang cá nhân</Link>
+                <Link href={`/detail/${session?.user?._id}`}>Profiles</Link>
             </MenuItem>
             <Divider />
             <MenuItem
@@ -179,7 +179,7 @@ export default function Header() {
                 <PlaylistAddIcon sx={{ mr: 1 }} />
 
                 <Link href={`/utils/${2}`}  >
-                    Danh sách phát</Link>
+                    PlayLists</Link>
             </MenuItem>
             <MenuItem
                 sx={{
@@ -191,7 +191,7 @@ export default function Header() {
 
                 <FavoriteBorderIcon fontSize="small" sx={{ mr: 1 }} />
                 <Link href={`/utils/${1}`}  >
-                    Danh sách yêu thích</Link>
+                    Likes</Link>
 
             </MenuItem>
             <MenuItem
@@ -204,7 +204,7 @@ export default function Header() {
 
                 <HistoryIcon fontSize="small" sx={{ mr: 1 }} />
                 <Link href={`/utils/${0}`}  >
-                    Lịch sử</Link>
+                    Historys</Link>
 
             </MenuItem>
 
@@ -233,7 +233,7 @@ export default function Header() {
                 <ListItemIcon>
                     <Logout fontSize="small" />
                 </ListItemIcon>
-                Đăng xuất
+                SignOut
             </MenuItem>
         </Menu>
     );
@@ -361,6 +361,7 @@ export default function Header() {
                                     {/* <Link href={`/utils/${2}`}  >
                                         Danh sách phát</Link> */}
                                     <Link href="/track/upload">Upload</Link>
+                                    <Link href="/home">Meeting</Link>
                                     <Chat />
                                     <Link href={`/detail/${session?.user?._id}`}>{session?.user?.name}</Link>
                                     <Avatar sx={{ width: 32, height: 32 }} onClick={handleProfileMenuOpen}
@@ -370,7 +371,7 @@ export default function Header() {
                                 : <>
                                     <Link href={"/auth/signin"}
 
-                                    >Đăng nhập</Link>
+                                    >SignIn</Link>
                                 </>
                             }
 

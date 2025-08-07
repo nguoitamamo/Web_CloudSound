@@ -8,7 +8,9 @@ import { sendRequest } from "@/utils/api"
 import CredentialsProvider from "next-auth/providers/credentials"
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
-import socket from "@/config/socket"
+import { useDispatch } from "react-redux"
+import { SetIsLoader } from "@/components/redux/userSlice"
+
 
 
 
@@ -176,6 +178,8 @@ export const authOptions: AuthOptions = {
             }
 
             return session
+
+  
         },
     }
 }

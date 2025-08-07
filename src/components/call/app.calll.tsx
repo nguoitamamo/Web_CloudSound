@@ -1,32 +1,115 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
-import { Box, IconButton, Typography, Avatar, Tooltip, Modal } from '@mui/material';
-import { CallEnd, Videocam, VideocamOff, Mic, MicOff } from '@mui/icons-material';
-import { CallState } from '../redux/callSlice';
+import React, { useRef, useState, useEffect } from 'react';
+import {
+    Box, IconButton, Typography, Avatar, Tooltip
+} from '@mui/material';
+import {
+    CallEnd, Videocam, VideocamOff, Mic, MicOff
+} from '@mui/icons-material';
+import PanToolAltIcon from '@mui/icons-material/PanToolAlt';
 import { useSelector } from 'react-redux';
+import { CallState } from '../redux/callSlice';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-
+import Peer from 'simple-peer';
+import socket from '@/config/socket';
 
 const CallScreen = () => {
     const localVideoRef = useRef<HTMLVideoElement>(null);
     const remoteVideoRef = useRef<HTMLVideoElement>(null);
 
+    const [localStream, setLocalStream] = useState<MediaStream | null>(null);
     const [isMicOn, setIsMicOn] = useState(true);
     const [isCameraOn, setIsCameraOn] = useState(true);
 
-    const toggleMic = () => setIsMicOn((prev) => !prev);
-    const toggleCamera = () => setIsCameraOn((prev) => !prev);
-
+    const toggleMic = () => setIsMicOn(prev => !prev);
+    const toggleCamera = () => setIsCameraOn(prev => !prev);
 
     const { incomingCall }: CallState = useSelector((state: any) => state.call);
+    const { data: session } = useSession();
 
-    const { data: session } = useSession()
+    useEffect(() => {
+        const startLocalVideo = async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    audio: true,
+                    video: true,
+                });
+                setLocalStream(stream);
+                if (localVideoRef.current) {
+                    localVideoRef.current.srcObject = stream;
+                }
+            } catch (err) {
+                console.error('Lỗi khi lấy stream:', err);
+            }
+        };
+
+        startLocalVideo();
+    }, []);
+
+
+
+    useEffect(() => {
+
+    }, [incomingCall])
+
+    useEffect(() => {
+        if (!incomingCall || !session) return;
+
+        const isCaller = session.user._id === incomingCall.fromUserID;
+        const peer = new Peer({
+            initiator: isCaller,
+            trickle: false,
+            stream: localStream!,
+        });
+
+        // Gửi signal data đến server
+        peer.on('signal', data => {
+            socket.emit('conn-signal', {
+                signal: data,
+                to: isCaller ? incomingCall.ToUserID : incomingCall.fromUserID,
+            });
+        });
+
+        // Nhận signal data từ server
+        socket.on('conn-signal', (data: any) => {
+            peer.signal(data.signal);
+        });
+
+        // Khi nhận stream từ đối phương
+        peer.on('stream', remoteStream => {
+            if (remoteVideoRef.current) {
+                remoteVideoRef.current.srcObject = remoteStream;
+            }
+        });
+
+        // Cleanup
+        return () => {
+            peer.destroy();
+            socket.off('conn-signal');
+        };
+
+    }, [incomingCall, localStream]);
+
+
+
+
+    useEffect(() => {
+        if (!localStream) return;
+        localStream.getAudioTracks().forEach(track => {
+            track.enabled = isMicOn;
+        });
+    }, [isMicOn, localStream]);
+
+    useEffect(() => {
+        if (!localStream) return;
+        localStream.getVideoTracks().forEach(track => {
+            track.enabled = isCameraOn;
+        });
+    }, [isCameraOn, localStream]);
 
     return (
-
-
         <Box
             sx={{
                 position: 'fixed',
@@ -51,7 +134,7 @@ const CallScreen = () => {
                 }}
             />
 
-            {/* Overlay: caller info */}
+            {/* Caller info */}
             <Box
                 sx={{
                     position: 'absolute',
@@ -62,23 +145,24 @@ const CallScreen = () => {
                     gap: 2,
                 }}
             >
-                {session?.user.name === incomingCall?.callerName ?
+                {session?.user.name === incomingCall?.callerName ? (
                     <>
-                        <Avatar src={`${process.env.NEXT_PUBLIC_BACKEND_URL_ASSET}/image/user/${incomingCall?.receivedAvatar}`} />
+                        <Avatar
+                            src={`${process.env.NEXT_PUBLIC_BACKEND_URL_ASSET}/image/user/${incomingCall?.receivedAvatar}`}
+                        />
                         <Typography variant="h6">{incomingCall?.receivedName}</Typography>
                     </>
-                    : <>
-                        <Avatar src={`${process.env.NEXT_PUBLIC_BACKEND_URL_ASSET}/image/user/${incomingCall?.callerAvatar}`} />
+                ) : (
+                    <>
+                        <Avatar
+                            src={`${process.env.NEXT_PUBLIC_BACKEND_URL_ASSET}/image/user/${incomingCall?.callerAvatar}`}
+                        />
                         <Typography variant="h6">{incomingCall?.callerName}</Typography>
                     </>
-                }
-
-
-
-
+                )}
             </Box>
 
-            {/* Local video preview */}
+            {/* Local preview */}
             <video
                 ref={localVideoRef}
                 muted
@@ -127,9 +211,14 @@ const CallScreen = () => {
                         {isCameraOn ? <Videocam color="primary" /> : <VideocamOff color="error" />}
                     </IconButton>
                 </Tooltip>
+
+                <Tooltip title="Giơ tay">
+                    <IconButton sx={{ bgcolor: '#fff' }}>
+                        <PanToolAltIcon />
+                    </IconButton>
+                </Tooltip>
             </Box>
         </Box>
-
     );
 };
 

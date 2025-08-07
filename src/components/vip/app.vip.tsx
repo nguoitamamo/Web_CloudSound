@@ -4,13 +4,13 @@ import { useState } from "react";
 import QRPaymentModal from "../qr/app.qr";
 
 const vipDescriptions: Record<string, string> = {
-    'Vip 1': `Nghe được bài hát vip, tạo group user tối đa 5 user`,
-    'Vip 2': `Nghe được bài hát vip, tạo group user tối đa 10 user`,
-    'Vip 3': `Nghe được bài hát vip, tạo group user tối đa 20 user`,
+    'VIP 1': `Nghe được bài hát vip, tạo group user tối đa 5 user`,
+    'VIP 2': `Nghe được bài hát vip, tạo group user tối đa 10 user`,
+    'VIP 3': `Nghe được bài hát vip, tạo group user tối đa 20 user`,
 };
 
 const Vip = () => {
-    const [selectedVip, setSelectedVip] = useState<'Vip 1' | 'Vip 2' | 'Vip 3'>('Vip 1');
+    const [selectedVip, setSelectedVip] = useState<'VIP 1' | 'VIP 2' | 'VIP 3'>('VIP 1');
     const [open, setOpen] = useState(false);
 
 
@@ -30,7 +30,7 @@ const Vip = () => {
 
                 }}
             >
-                {(['Vip 1', 'Vip 2', 'Vip 3'] as const).map((vip) => (
+                {(['VIP 1', 'VIP 2', 'VIP 3'] as const).map((vip) => (
                     <Button
                         key={vip}
                         onClick={() => setSelectedVip(vip)}
@@ -52,7 +52,7 @@ const Vip = () => {
             </Box>
 
 
-            <QRPaymentModal  open={open} setOpen={setOpen}/>
+            <QRPaymentModal open={open} setOpen={setOpen} />
             <Typography variant="body1"
                 sx={{
                     padding: 5,

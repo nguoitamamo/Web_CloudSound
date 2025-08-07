@@ -5,7 +5,7 @@ import 'dayjs/locale/vi'; // hoặc 'en' nếu bạn muốn tiếng Anh
 dayjs.extend(relativeTime);
 dayjs.locale('vi');
 
-export const formatDateTime = (date: string) => {
+export const formatDateTime = (date: any) => {
     // date is less than 1min ago , return "just now"
     // date is less than 1hr ago , return "x minutes ago"
     // date is less than 1day ago , return "hh:mm A"

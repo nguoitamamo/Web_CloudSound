@@ -6,6 +6,8 @@ import authorsSlice from "./authorsSlice";
 import albumssSlice from "./albumsSlice";
 import callSlice from "./callSlice";
 
+
+
 const store = configureStore({
   reducer: {
     user: userSlice.reducer,
@@ -14,6 +16,8 @@ const store = configureStore({
     genres: genresSlice.reducer,
     albums: albumssSlice.reducer,
     call: callSlice.reducer,
+
+
   },
 });
 

@@ -492,4 +492,4 @@ const WaveTrack = (props: IProp) => {
     )
 }
 
-export default WaveTrack
+export default WaveTrack;

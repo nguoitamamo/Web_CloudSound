@@ -7,6 +7,10 @@ import Vip from "@/components/vip/app.vip";
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import HomeHistory from "@/components/history/home.history";
+import MeetingTypeList from "@/components/MeetingTypeList";
+
+
+
 
 
 
@@ -26,6 +30,7 @@ const HomePage = async () => {
 
 
   // _app.tsx hoặc trong component chính
+
 
 
 
@@ -58,6 +63,8 @@ const HomePage = async () => {
           <HomeHistory />
         </Box>
       </Box>
+
+      {/* <MeetingTypeList /> */}
     </ Container >
 
   );

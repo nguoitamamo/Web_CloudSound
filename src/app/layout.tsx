@@ -8,6 +8,8 @@ import { ToastProvider } from '@/components/lib/toast';
 import { SongProvider } from '@/components/track/context.viewtrack';
 import ReduxProvider from '@/components/redux/redux-provider';
 
+import './globals.css'
+import StreamVideoProvider from 'providers/StreamClientProvider';
 
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -22,15 +24,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                         <NextAuth>
                             <WaveSurferProvider>
                                 <ReduxProvider>
+
                                     <SongProvider>
 
                                         <ToastProvider>
-
-                                            <Container>
-                                                {children}
-                                            </Container>
+                                         
+                                                <Container>
+                                                    {children}
+                                                </Container>
+                                           
                                         </ToastProvider>
                                     </SongProvider>
+
                                 </ReduxProvider>
                             </WaveSurferProvider>
                         </NextAuth>
