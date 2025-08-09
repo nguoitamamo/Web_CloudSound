@@ -7,3 +7,4 @@ export async function GET(request: NextRequest, response: NextResponse) {
     return await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_ASSET}/audio/${audio}`);
 }
 
+

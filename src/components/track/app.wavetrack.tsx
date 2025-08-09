@@ -79,6 +79,10 @@ const WaveTrack = (props: IProp) => {
         });
         wavesurferRef.current = ws;
 
+
+
+
+
         setCurrentSong({
             ...props.song,
             isPlayCurrent: false,
@@ -250,6 +254,7 @@ const WaveTrack = (props: IProp) => {
         const ws = wavesurferRef.current;
         if (!ws) return;
 
+        console.log(">> check ws", ws);
 
         const willBePlaying = !ws.isPlaying();
 

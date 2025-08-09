@@ -10,6 +10,7 @@ import ReduxProvider from '@/components/redux/redux-provider';
 
 import './globals.css'
 import StreamVideoProvider from 'providers/StreamClientProvider';
+import Header from '@/components/header/app.header';
 
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -22,17 +23,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <ThemeRegistry>
                     <ProgressProviders>
                         <NextAuth>
+
                             <WaveSurferProvider>
                                 <ReduxProvider>
 
                                     <SongProvider>
 
                                         <ToastProvider>
-                                         
-                                                <Container>
-                                                    {children}
-                                                </Container>
-                                           
+
+                                            <Container>
+                                                {children}
+                                            </Container>
+
                                         </ToastProvider>
                                     </SongProvider>
 

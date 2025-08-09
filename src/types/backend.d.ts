@@ -7,7 +7,18 @@ import Peer from 'simple-peer'
 
 declare global {
 
+    interface IRole {
+        _id: string;
+        name: string;
+        permissions: [
+            {
+                _id: string
+                name: string
+            },
 
+        ],
+        money: string
+    }
 
 
     interface ISong {
@@ -43,6 +54,15 @@ declare global {
         "updatedAt": Date,
         "state": string,
         "isVip": boolean
+
+    }
+
+
+
+    interface ISongContextCurrent extends ISong {
+        isPlayCurrent: boolean,
+        duration: number;
+        current: number;
 
     }
 
@@ -91,12 +111,6 @@ declare global {
 
 
 
-    interface ISongContextCurrent extends ISong {
-        isPlayCurrent: boolean,
-        duration: number;
-        current: number;
-
-    }
 
 
 
