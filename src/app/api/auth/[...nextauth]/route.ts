@@ -74,15 +74,6 @@ export const authOptions: AuthOptions = {
                 }
             }
         }),
-        FacebookProvider({
-            clientId: process.env.FACEBOOK_CLIENT_ID!,
-            clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
-            authorization: {
-                params: {
-                    scope: "email",
-                },
-            },
-        }),
         GithubProvider({
             clientId: process.env.GITHUB_ID!,
             clientSecret: process.env.GITHUB_SECRET!,
@@ -179,7 +170,7 @@ export const authOptions: AuthOptions = {
 
             return session
 
-  
+
         },
     }
 }
