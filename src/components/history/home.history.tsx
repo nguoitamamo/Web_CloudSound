@@ -26,6 +26,9 @@ const HomeHistory = () => {
                 const res = await sendRequest<IBackendRes<IHistory[]>>({
                     url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/historys/user/${session.user._id}`,
                     method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${session.user.access_token}`
+                    },
                 });
                 if (res?.data)
                     setHistory(res?.data);

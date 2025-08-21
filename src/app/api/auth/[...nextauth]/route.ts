@@ -8,7 +8,9 @@ import { sendRequest } from "@/utils/api"
 import CredentialsProvider from "next-auth/providers/credentials"
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
-import socket from "@/config/socket"
+import { useDispatch } from "react-redux"
+import { SetIsLoader } from "@/components/redux/userSlice"
+
 
 
 
@@ -71,15 +73,6 @@ export const authOptions: AuthOptions = {
                     response_type: "code"
                 }
             }
-        }),
-        FacebookProvider({
-            clientId: process.env.FACEBOOK_CLIENT_ID!,
-            clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
-            authorization: {
-                params: {
-                    scope: "email",
-                },
-            },
         }),
         GithubProvider({
             clientId: process.env.GITHUB_ID!,
@@ -171,24 +164,13 @@ export const authOptions: AuthOptions = {
                 session.user.shared = token.shared;
 
 
-                socket.on('connect', () => {
-
-                    session.user.socketId = socket.id;
-                    socket.emit('join_room', {
-                        roomName: session.user._id,
-                        user: {
-                            socketId: session.user.socketId,
-                            _id: session.user._id,
-                            name: session.user.name,
-                            avatar: session.user.avatar
-                        },
-                    });
-                });
 
 
             }
 
             return session
+
+
         },
     }
 }

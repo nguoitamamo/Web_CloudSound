@@ -1,13 +1,24 @@
 export { };
 // https://bobbyhadz.com/blog/typescript-make-types-global#declare-global-types-in-typescript
 
-
+import Peer from 'simple-peer'
 
 
 
 declare global {
 
+    interface IRole {
+        _id: string;
+        name: string;
+        permissions: [
+            {
+                _id: string
+                name: string
+            },
 
+        ],
+        money: string
+    }
 
 
     interface ISong {
@@ -43,6 +54,15 @@ declare global {
         "updatedAt": Date,
         "state": string,
         "isVip": boolean
+
+    }
+
+
+
+    interface ISongContextCurrent extends ISong {
+        isPlayCurrent: boolean,
+        duration: number;
+        current: number;
 
     }
 
@@ -91,12 +111,6 @@ declare global {
 
 
 
-    interface ISongContextCurrent extends ISong {
-        isPlayCurrent: boolean,
-        duration: number;
-        current: number;
-
-    }
 
 
 
@@ -214,6 +228,8 @@ declare global {
         name: string;
         email: string;
         avatar: string;
+        createdAt: Date;
+        updatedAt: Date;
     }
 
 
@@ -228,8 +244,8 @@ declare global {
         groupBio: string;
         groupAdmins: UserType[];
         unreadCounts: any;
-        createdAt: string;
-        updatedAt: string;
+        createdAt: Date;
+        updatedAt: Date;
     }
 
     interface MessageType {
@@ -240,14 +256,17 @@ declare global {
         text: string;
         image: string;
         readBy: string[];
-        createdAt: string;
-        updatedAt: string;
+        isDeleted: boolean,
+        deletedAt: Date | null,
+        createdAt: Date;
+        updatedAt: Date;
     }
+
 
     interface IChat {
         _id: string,
         users: UserType[],
-        lastMessageAt: Date,
+        lastMessageAt: Date | string,
         createdBy: UserType,
         isGroupChat: boolean,
         groupName: string,
@@ -262,7 +281,29 @@ declare global {
         unreadCounts: string[]
 
     }
+    interface AlbumType {
+        _id: string,
+        name: string,
+        description: string
+    }
 
+    interface Genre {
+        _id: string,
+        name: string,
+        descriptions: string,
+
+    }
+
+    interface InfoCallUser {
+        fromUserID: string,
+        ToUserID: string,
+        callerName: string;
+        callerAvatar: string;
+        receivedName: string;
+        receivedAvatar: string;
+        chatID: string;
+        socketID: string
+    }
     interface IWaveSurferContextValue {
         current: IWaveSurferContext;
         setCurrent: React.Dispatch<React.SetStateAction<IWaveSurferContext>>;
@@ -272,6 +313,52 @@ declare global {
         currentTime: number;
     }
 
+
+    interface PeerData {
+        peerConnection: Peer.Instance,
+        stream: MediaStream | undefined,
+        userID: string,
+        socketID: string
+
+    }
+
+    interface ICall {
+        _id: string,
+        callID: string,
+        adminID: {
+            _id: string,
+            name: string,
+            avatar: string
+        }
+    }
+
+    interface IZoom {
+        _id: string,
+        name: string,
+        adminID: string,
+        chat: {
+            _id: string,
+            users: [
+                {
+                    _id: string,
+                    name: string,
+                    avatar: string,
+                }
+            ]
+        },
+        isDeleted: boolean,
+        deletedAt: null | Date,
+        createdAt: Date,
+        updatedAt: Date,
+
+    }
+
+
+    interface UserInfoUpdateRole {
+        userId: string,
+        userName: string,
+        vipName: string
+    }
 
 
 

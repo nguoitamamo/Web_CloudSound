@@ -16,8 +16,10 @@ import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import { useSession } from "next-auth/react"
 import { useToast } from "../lib/toast";
 import socket from "@/config/socket";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SetOnlineUsers } from "../redux/userSlice";
+import CallEd from "../modal/user.called";
+import { CallState, setIncomingCall } from "../redux/callSlice";
 
 
 interface IProp {
@@ -29,6 +31,12 @@ const MainSlider = (props: IProp) => {
 
     const [type, setType] = useState(props.type || '');
     const [song, setSong] = useState(props.data || []);
+    // const [incomingCall, setIncomingCall] = useState<InfoCallUser | null>(null);
+    const { incomingCall }: CallState = useSelector((state: any) => state.call);
+
+
+    const [open, setOpen] = useState(false);
+
 
     const { data: session } = useSession();
 
@@ -51,9 +59,16 @@ const MainSlider = (props: IProp) => {
             socket.on("online-users-updated", (onlineUsers: string[]) => {
                 dispatch(SetOnlineUsers(onlineUsers));
             });
+
+
+            console.log(">> check ở client");
+            socket.on("incoming-call", (data: InfoCallUser) => {
+                setOpen(true);
+                dispatch(setIncomingCall(data))
+            });
+
         }
     }, [session?.user]);
-
 
 
     const SampleNextArrow = (props: any) => {
@@ -180,6 +195,21 @@ const MainSlider = (props: IProp) => {
 
 
             }}>
+
+            {incomingCall && (
+                <CallEd
+                    open={open}
+                    onClose={() => setOpen(false)}
+                    callerName={incomingCall.callerName}
+                    callerAvatar={incomingCall.callerAvatar}
+                    incomingCall={incomingCall}
+                    setIncomingCall={setIncomingCall}
+
+                />
+            )}
+
+
+
             <div className="title">
                 <h2>Trending</h2>
                 <>

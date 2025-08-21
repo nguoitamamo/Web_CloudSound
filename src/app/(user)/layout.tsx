@@ -1,6 +1,8 @@
-'use client'
+
 
 import Header from '@/components/header/app.header';
+
+
 
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -13,6 +15,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
       {children}
       {/* <Footer /> */}
+
+
     </>
   );
 }

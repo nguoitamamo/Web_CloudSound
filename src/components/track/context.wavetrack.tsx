@@ -1,6 +1,8 @@
 'use client'
-import { createContext, useContext, useRef } from "react";
+import { createContext, useContext, useEffect, useRef } from "react";
 import WaveSurfer from "wavesurfer.js";
+import WaveTrack from "./app.wavetrack";
+import { useSongContext } from "./context.viewtrack";
 
 interface IWaveSurferContext {
     wavesurferRef: React.MutableRefObject<WaveSurfer | null>;
@@ -10,9 +12,11 @@ const WaveSurferContext = createContext<IWaveSurferContext | null>(null);
 
 export const WaveSurferProvider = ({ children }: { children: React.ReactNode }) => {
     const wavesurferRef = useRef<WaveSurfer | null>(null);
+  
 
     return (
         <WaveSurferContext.Provider value={{ wavesurferRef }}>
+           
             {children}
         </WaveSurferContext.Provider>
     );

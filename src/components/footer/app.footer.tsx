@@ -3,23 +3,14 @@
 // import 'react-h5-audio-player/lib/styles.css';
 // import { AppBar, Box, Container } from "@mui/material";
 // import UseHasMounted from '@/utils/customhook';
-// import { useEffect, useRef, useState } from 'react';
-// import { useSongContext } from '../track/context.wavetrack';
+// import { useWaveSurfer } from '../track/context.wavetrack';
+
 
 // const Footer = () => {
 //     const hasMounted = UseHasMounted();
-//     const audioRef = useRef<HTMLAudioElement | null>(null);
-//     const { song, setSong } = useSongContext() as ISongContextCurrent;
 
 
-//     useEffect(() => {
-//         if (audioRef.current) {
-//             //@ts-ignore
-//             audioRef.current.play() ? audioRef.current.pause() : audioRef.current.play()
-//         }
-
-//     }, [song, song.isPlayCurrent]);
-
+//     const { wavesurferRef } = useWaveSurfer();
 
 //     if (!hasMounted) return (<></>)
 

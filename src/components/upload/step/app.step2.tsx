@@ -1,7 +1,7 @@
 'use client'
 import { Avatar, Box, TextField, Typography, MenuItem, Select, FormControl, InputLabel, Button, Checkbox, FormGroup, FormControlLabel } from "@mui/material";
 import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { styled } from '@mui/material/styles';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { sendRequest } from "@/utils/api";
@@ -9,6 +9,10 @@ import { useSession } from "next-auth/react"
 import axios from "axios";
 import CloseIcon from '@mui/icons-material/Close'
 import { useToast } from "@/components/lib/toast";
+import { useDispatch, useSelector } from "react-redux";
+import { GenresState, setGenres } from "@/components/redux/genresSlice";
+import { AuthorsState, setAuthors } from "@/components/redux/authorsSlice";
+import { AlbumsState, setAlbumID, setAlbums } from "@/components/redux/albumsSlice";
 
 interface IProp {
     songUpload: {
@@ -127,8 +131,19 @@ const StepSecond = ({ songUpload, percent, setSongUpload, setTab }: IProp) => {
 
     const [checked, setChecked] = useState(false);
 
-    const authors = ['686e76717c55361f30426d66', 'Mỹ Tâm', 'Đen Vâu', 'Noo Phước Thịnh'];
-    const genres = ['Nhạc trẻ', 'Rock', 'Ballad', 'Rap', 'EDM'];
+    // const { currentUserData }: UserState = useSelector((state: any) => state.user);
+
+
+    const { authors }: AuthorsState = useSelector((state: any) => state.authors);
+    const { genres }: GenresState = useSelector((state: any) => state.genres);
+    const { albums, albumID }: AlbumsState = useSelector((state: any) => state.albums);
+
+
+
+    const usedispath = useDispatch()
+
+    // const authors = ['686e76717c55361f30426d66', 'Mỹ Tâm', 'Đen Vâu', 'Noo Phước Thịnh'];
+    // const genres = ['Nhạc trẻ', 'Rock', 'Ballad', 'Rap', 'EDM'];
     const toast = useToast()
     const { data: session } = useSession()
 
@@ -153,6 +168,7 @@ const StepSecond = ({ songUpload, percent, setSongUpload, setTab }: IProp) => {
                 users: songUpload.users,
                 genres: songUpload.genres,
                 isVip: checked,
+                albumID: albumID,
                 state: 'confirm',
             }
         })
@@ -172,6 +188,57 @@ const StepSecond = ({ songUpload, percent, setSongUpload, setTab }: IProp) => {
 
 
     }
+
+
+
+    const handleGetAllUser = async () => {
+        const res = await sendRequest<IBackendRes<UserType[]>>({
+            url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/all`,
+            method: "GET",
+        })
+        if (res?.data) {
+            usedispath(setAuthors(res.data))
+        }
+
+    }
+
+    const handleGetGenres = async () => {
+        const res = await sendRequest<IBackendRes<Genre[]>>({
+            url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/genres`,
+            method: "GET",
+        })
+        if (res?.data) {
+            usedispath(setGenres(res.data))
+        }
+
+    }
+
+
+
+
+    const handleGetAlbumUser = async () => {
+        const res = await sendRequest<IBackendRes<AlbumType[]>>({
+            url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/album/${session?.user?._id}`,
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${session?.user?.access_token}`
+            },
+        })
+
+        if (res?.data) {
+            usedispath(setAlbums(res.data))
+        }
+    }
+
+
+
+    useEffect(() => {
+        handleGetAllUser(),
+            handleGetGenres(),
+            handleGetAlbumUser()
+    }, [])
+
+
 
     return (
         <Box sx={{ border: '2px dashed', padding: 10, borderRadius: 2 }}>
@@ -264,10 +331,11 @@ const StepSecond = ({ songUpload, percent, setSongUpload, setTab }: IProp) => {
                                         users: [...prev.users, e.target.value]
                                     }));
                                 }}
+
                         >
-                            {authors.map((a, idx) => (
-                                <MenuItem key={idx} value={a}>
-                                    {a}
+                            {authors?.map((a) => (
+                                <MenuItem key={a._id} value={a._id}>
+                                    {a.name}
                                 </MenuItem>
                             ))}
                         </Select>
@@ -318,15 +386,59 @@ const StepSecond = ({ songUpload, percent, setSongUpload, setTab }: IProp) => {
                                     genres: [...prev.genres, e.target.value]
                                 }));
                             }}
+
                         >
-                            {genres.map((g, idx) => (
-                                <MenuItem key={idx} value={g}>
-                                    {g}
+                            {genres?.map((g) => (
+                                <MenuItem key={g._id} value={g.name}>
+                                    {g.name}
                                 </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
 
+
+
+
+
+                    {/* <FormControl fullWidth>
+                        <InputLabel>Album</InputLabel>
+                        <Select
+                            value={songUpload.genres}
+                            label="Album"
+                            onChange={(e) => {
+                                setSongUpload((prev: any) => ({
+                                    ...prev,
+                                    genres: [...prev.genres, e.target.value]
+                                }));
+                            }}
+
+                        >
+                            {albums?.map((g) => (
+                                <MenuItem key={g._id} value={g.name}>
+                                    {g.name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl> */}
+
+                    <TextField
+                        id="outlined-select-currency"
+                        select
+                        label="Album"
+                        defaultValue="EUR"
+                        sx={{ mt: 3, width: 200 }}
+                        onChange={(e) => {
+                            console.log(">> check album", e.target.value)
+                            usedispath(setAlbumID(e.target.value));
+
+                        }}
+                    >
+                        {albums.map((option) => (
+                            <MenuItem key={option._id} value={option._id}>
+                                {option.name}
+                            </MenuItem>
+                        ))}
+                    </TextField>
 
                     <FormGroup>
                         <FormControlLabel

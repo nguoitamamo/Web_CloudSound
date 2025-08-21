@@ -1,6 +1,7 @@
 'use client'
 import { createContext, useContext, useRef, useState } from "react";
 
+
 interface SongContextType {
     currentSong: ISongContextCurrent | null;
     setCurrentSong: (song: ISongContextCurrent) => void;
@@ -15,6 +16,7 @@ export const SongProvider = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <SongContext.Provider value={{ currentSong, setCurrentSong }}>
+           
             {children}
         </SongContext.Provider>
     );

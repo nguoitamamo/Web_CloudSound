@@ -58,6 +58,7 @@ const Detail = ({ followers }: IProps) => {
         <Tab label="Yêu thích" {...a11yProps(0)} />
         <Tab label="Theo dõi" {...a11yProps(1)} />
         <Tab label="Người theo dõi" {...a11yProps(2)} />
+        <Tab label="Bạn bè" {...a11yProps(3)} />
       </Tabs>
 
 
@@ -128,6 +129,10 @@ const Detail = ({ followers }: IProps) => {
           ))}
         </Box>
       </TabPanel>
+      <TabPanel value={tab} index={1}>
+        <Typography>Danh sách bạn bè</Typography>
+      </TabPanel>
+
     </Box>
   );
 };

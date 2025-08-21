@@ -13,6 +13,8 @@ import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
+import { useDispatch } from 'react-redux';
+import { SetIsLoader } from '../redux/userSlice'
 
 
 const AuthSignIn = () => {
@@ -20,6 +22,8 @@ const AuthSignIn = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState<string | null>(null);
+    const dispatch = useDispatch();
+
 
     const handleCredentialSignIn = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -31,6 +35,12 @@ const AuthSignIn = () => {
         })
 
         if (!res?.error) {
+
+
+
+            dispatch(SetIsLoader(true));
+
+
             router.push('/');
         } else {
             setError(res?.error);

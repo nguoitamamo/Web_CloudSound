@@ -14,7 +14,6 @@ const SearchSong = async (props: any) => {
 
     return (
         <Container sx={{ mt: 3 }}>
-            <h3>Kết quả tìm kiếm: {params.slug}</h3>
             <SearchSongItem data={res?.data ?? []} />
         </Container>
     )
