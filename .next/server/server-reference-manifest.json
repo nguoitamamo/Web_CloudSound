@@ -1,4 +1,1 @@
-{
-  "node": {},
-  "edge": {}
-}
+{"node":{"68cffb7c8be715e856ce86b5764b11a9c9b165a6":{"workers":{"app/(user)/home/page":36914,"app/(user)/home/personal-room/page":36914,"app/(user)/home/previous/page":36914,"app/(user)/home/recordings/page":36914,"app/(user)/home/upcoming/page":36914,"app/(user)/home/zoom/page":36914,"app/(user)/home/zoom/[slug]/page":36914,"app/(user)/home/meeting/[id]/page":36914},"layer":{"app/(user)/home/page":"actionBrowser","app/(user)/home/personal-room/page":"actionBrowser","app/(user)/home/previous/page":"actionBrowser","app/(user)/home/recordings/page":"actionBrowser","app/(user)/home/upcoming/page":"actionBrowser","app/(user)/home/zoom/page":"actionBrowser","app/(user)/home/zoom/[slug]/page":"actionBrowser","app/(user)/home/meeting/[id]/page":"actionBrowser"}}},"edge":{}}
