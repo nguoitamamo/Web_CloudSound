@@ -81,7 +81,7 @@ const projects = [
     },
 ];
 
-const Base = () => {
+const BaseCV = () => {
 
     const [open, setOpen] = useState(false);
     const [selectedProject, setSelectedProject] = useState<any>(null);
@@ -118,7 +118,7 @@ const Base = () => {
                         {/* Avatar */}
                         <Grid item xs={12} sm={4} display="flex" justifyContent="center">
                             <Avatar
-                                src={`${process.env.NEXT_PUBLIC_BACKEND_URL_ASSET}/image/user/huynhngoctruong.jpg`}
+                                src={`${process.env.NEXT_PUBLIC_BACKEND_URL_ASSET}/image/user/macdinh-1752407351215.jpg`}
                                 sx={{
                                     width: 180,
                                     height: 250,
@@ -143,7 +143,7 @@ const Base = () => {
                             }
                         }}>
                             <Typography variant="h4" fontWeight="bold">
-                                HUỲNH NGỌC TRƯƠNG
+                                Họ và Tên
                             </Typography>
                             <Typography variant="subtitle1" fontWeight="medium" color="primary">
                                 THỰC TẬP SINH CÔNG NGHỆ THÔNG TIN
@@ -155,8 +155,8 @@ const Base = () => {
                             <Link href={'https://github.com/nguoitamamo'}>
                                 <GitHubIcon fontSize="small" /> github.com/nguoitamamo
                             </Link>
-                            <Link href={'http://huynhngoctruong.io.vn/profile'}>
-                                <LanguageIcon fontSize="small" /> huynhngoctruong.io.vn/profile
+                            <Link href={'https://huynhngoctruong.io.vn/cv'}>
+                                <LanguageIcon fontSize="small" /> huynhngoctruong.io.vn/cv
                             </Link>
                         </Grid>
                     </Grid>
@@ -391,4 +391,4 @@ const Base = () => {
     );
 }
 
-export default Base;
+export default BaseCV;

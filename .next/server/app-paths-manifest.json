@@ -1,5 +1,27 @@
 {
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/api/route": "app/api/route.js",
+  "/cv/page": "app/cv/page.js",
+  "/portfolio/page": "app/portfolio/page.js",
   "/profile/page": "app/profile/page.js",
+  "/api/bank-transaction/route": "app/api/bank-transaction/route.js",
+  "/api/generate-qr/route": "app/api/generate-qr/route.js",
   "/(user)/page": "app/(user)/page.js",
-  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js"
+  "/(user)/call/page": "app/(user)/call/page.js",
+  "/(user)/detail/[slug]/page": "app/(user)/detail/[slug]/page.js",
+  "/(user)/payment/[id]/page": "app/(user)/payment/[id]/page.js",
+  "/(user)/search/[slug]/page": "app/(user)/search/[slug]/page.js",
+  "/(user)/track/[slug]/page": "app/(user)/track/[slug]/page.js",
+  "/(user)/track/upload/page": "app/(user)/track/upload/page.js",
+  "/(user)/utils/[slug]/page": "app/(user)/utils/[slug]/page.js",
+  "/(user)/home/page": "app/(user)/home/page.js",
+  "/(user)/home/personal-room/page": "app/(user)/home/personal-room/page.js",
+  "/(user)/home/previous/page": "app/(user)/home/previous/page.js",
+  "/(user)/home/recordings/page": "app/(user)/home/recordings/page.js",
+  "/(user)/home/upcoming/page": "app/(user)/home/upcoming/page.js",
+  "/(user)/home/zoom/page": "app/(user)/home/zoom/page.js",
+  "/(guest)/auth/signin/page": "app/(guest)/auth/signin/page.js",
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/(user)/home/zoom/[slug]/page": "app/(user)/home/zoom/[slug]/page.js",
+  "/(user)/home/meeting/[id]/page": "app/(user)/home/meeting/[id]/page.js"
 }

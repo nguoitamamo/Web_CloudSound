@@ -1,9 +1,9 @@
-import CV from "@/components/user/profile/base/cv.new";
+import BaseCV from "@/components/user/profile/base/cv.user";
 
 
 const ProfileHuynhNgocTruong = () => {
     return (
-        <CV></CV>
+        <BaseCV></BaseCV>
     )
 }
 

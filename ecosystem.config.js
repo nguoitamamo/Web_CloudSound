@@ -3,7 +3,8 @@ module.exports = {
     {
       name: "fe-sound",
       script: "npm",
-      args: "run start"
+      args: "run start",
+      watch: true
     }
   ]
 };
