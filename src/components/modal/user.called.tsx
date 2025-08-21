@@ -5,6 +5,7 @@ import { Dialog, DialogTitle, DialogContent, Avatar, Button } from '@mui/materia
 import socket from '@/config/socket';
 import CallScreen from '../call/app.calll';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 
 interface IProps {
@@ -19,6 +20,8 @@ interface IProps {
 
 const CallEd = ({ open, callerName, callerAvatar, incomingCall, setIncomingCall, onClose }: IProps) => {
 
+
+    const { data : session} =  useSession();
     const [openCall, setOpenCall] = useState(false);
 
     const handleReject = () => {
@@ -34,7 +37,14 @@ const CallEd = ({ open, callerName, callerAvatar, incomingCall, setIncomingCall,
             socket.connect();
         }
 
-        socket.emit('call-accepted', incomingCall);
+        socket.emit('accept-call', {
+            fromUserID: session?.user._id,
+            toUserID: session?.user._id === incomingCall.fromUserID ? incomingCall.ToUserID : incomingCall.fromUserID,
+        });
+
+
+
+        // socket.emit('call-accepted', incomingCall);
         onClose();
         setOpenCall(true)
     }
