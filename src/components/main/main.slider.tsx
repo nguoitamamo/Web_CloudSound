@@ -25,6 +25,7 @@ import { CallState, setIncomingCall } from "../redux/callSlice";
 interface IProp {
     data: ISong[];
     type: string;
+    topic: string;
 }
 
 const MainSlider = (props: IProp) => {
@@ -78,7 +79,7 @@ const MainSlider = (props: IProp) => {
                 sx={{
                     position: 'absolute',
                     zIndex: 2,
-                    top: '21%',
+                    top: '30%',
                     right: 20,
                     minWidth: 30,
                     width: 35,
@@ -99,8 +100,8 @@ const MainSlider = (props: IProp) => {
                 sx={{
                     position: 'absolute',
                     zIndex: 2,
-                    top: '21%',
-                    left: 13,
+                    top: '30%',
+                    left: 1,
                     minWidth: 30,
                     width: 35,
                     height: 25,
@@ -145,6 +146,7 @@ const MainSlider = (props: IProp) => {
             setSong(songTrending?.data);
 
     }
+
     const handleAddPlaylist = async ({ song }: any) => {
 
         try {
@@ -156,6 +158,27 @@ const MainSlider = (props: IProp) => {
                 },
                 body: {
                     songID: song
+                }
+            })
+            if (addPlaylist?.message)
+                toast.success(addPlaylist?.message)
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+    const handleAddLikes = async (id: string) => {
+
+        try {
+            const addPlaylist = await sendRequest<IBackendRes<any>>({
+                url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/likes`,
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${session?.user.access_token}`
+                },
+                body: {
+                    _id: id,
+                    status: true
                 }
             })
             if (addPlaylist?.message)
@@ -184,11 +207,14 @@ const MainSlider = (props: IProp) => {
                 },
                 ".title": {
                     display: 'flex',
+                    alignItems: 'center',
                     gap: 2,
+                    marginTop: '20px',
+                    marginBottom: '20px',
                     "Button": {
                         height: '35px',
 
-                        marginTop: '20px'
+                        // 
                     }
                 },
 
@@ -211,18 +237,22 @@ const MainSlider = (props: IProp) => {
 
 
             <div className="title">
-                <h2>Trending</h2>
-                <>
-                    <ToggleButton label="tuần" isActive={type === 'week'} onClick={() => {
-                        setType('week'),
-                            handleTopSong({ type: 'week' });
-                    }} />
-                    <ToggleButton label="tháng" isActive={type === 'month'} onClick={() => {
-                        setType('month'),
-                            handleTopSong({ type: 'month' });
-                    }
-                    } />
-                </>
+                <h2 style={{ marginTop: 5 }}>{props.topic}</h2>
+
+                {props.topic === "Trending" &&
+                    <>
+                        <ToggleButton label="tuần" isActive={type === 'week'} onClick={() => {
+                            setType('week'),
+                                handleTopSong({ type: 'week' });
+                        }} />
+                        <ToggleButton label="tháng" isActive={type === 'month'} onClick={() => {
+                            setType('month'),
+                                handleTopSong({ type: 'month' });
+                        }
+                        } />
+                    </>
+                }
+
             </div>
 
             <Slider {...settings} >
@@ -261,7 +291,7 @@ const MainSlider = (props: IProp) => {
                                         }}
                                         size="small"
                                     >
-                                        <FavoriteBorderIcon fontSize="small" />
+                                        <FavoriteBorderIcon fontSize="small" onClick={() => handleAddLikes(songItem._id)} />
                                     </IconButton>
                                 </Tooltip>
 

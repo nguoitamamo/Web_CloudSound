@@ -1,4 +1,4 @@
-// File: D:\Web_Sound\nextjs-mui-ts-starter\src\app\(user)\layout.tsx
+// File: /home/truong/Documents/Web_CloudSound/src/app/(user)/layout.tsx
 import * as entry from '../../../../src/app/(user)/layout.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

@@ -120,7 +120,7 @@ const AuthSignIn = () => {
                     >
                         Đăng nhập với Google
                     </Button>
-                    <Button
+                    {/* <Button
                         variant="outlined"
                         startIcon={<GitHubIcon />}
                         fullWidth
@@ -132,7 +132,7 @@ const AuthSignIn = () => {
                         }}
                     >
                         Đăng nhập với GitHub
-                    </Button>
+                    </Button> */}
                 </Stack>
             </Box>
         </Box>

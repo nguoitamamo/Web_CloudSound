@@ -1,4 +1,4 @@
-// File: D:\Web_Sound\nextjs-mui-ts-starter\src\app\api\auth\[...nextauth]\route.ts
+// File: /home/truong/Documents/Web_CloudSound/src/app/api/auth/[...nextauth]/route.ts
 import * as entry from '../../../../../../src/app/api/auth/[...nextauth]/route.js'
 import type { NextRequest } from 'next/server.js'
 

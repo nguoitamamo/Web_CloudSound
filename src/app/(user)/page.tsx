@@ -45,7 +45,7 @@ const HomePage = async () => {
 
 
         <Box sx={{ flex: 7 }}>
-          <MainSlider data={songTrending?.data ?? []} type={type} />
+          <MainSlider data={songTrending?.data ?? []} type={type} topic={"Trending"} />
         </Box>
         <Box sx={{ flex: 3 }}>
           <Vip />
@@ -57,7 +57,7 @@ const HomePage = async () => {
         justifyContent: 'space-evenly',
       }}>
         <Box sx={{ flex: 7 }}>
-          <MainSlider data={songTrending?.data ?? []} type={type} />
+          <MainSlider data={songTrending?.data ?? []} type={type} topic={"Gợi ý dành cho bạn"} />
         </Box>
         <Box sx={{ flex: 3 }}>
           <HomeHistory />

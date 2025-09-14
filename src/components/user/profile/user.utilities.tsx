@@ -7,6 +7,7 @@ import GroupComponent from './group/user.group';
 import ListGroup from './group/list.group';
 import { checkRole } from '@/utils/function';
 import { useSession } from 'next-auth/react';
+import LikeItem from './likes/user.like';
 
 
 
@@ -67,7 +68,7 @@ const Playlist = ({ tabStart }: IProps) => {
             </TabPanel>
 
             <TabPanel value={tab} index={1}>
-                Danh sách yêu thích
+                <LikeItem />
             </TabPanel>
 
             <TabPanel value={tab} index={2}>

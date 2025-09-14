@@ -82,7 +82,7 @@ const SePayQR = () => {
 
                         <Box sx={{ mb: 2 }}>
                             <Typography variant="body2" fontWeight="bold">
-                                Thụ hưởng: HUYNH NGOC TRUONG
+                                Thụ hưởng: SOUND CLOUD
                             </Typography>
 
                         </Box>

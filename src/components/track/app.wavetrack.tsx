@@ -309,7 +309,7 @@ const WaveTrack = (props: IProp) => {
 
         const checkAndSendView = async (currentTime: number) => {
             const duration = ws.getDuration();
-            if (duration > 0 && (currentTime / duration) >= 0.1 && !hasTrackedViewRef.current) {
+            if (duration > 0 && (currentTime / duration) >= 0.5 && !hasTrackedViewRef.current) {
                 try {
                     const update = await sendRequest<IBackendRes<any>>({
                         url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/songs/updateview/${props.song._id}`,
@@ -319,21 +319,16 @@ const WaveTrack = (props: IProp) => {
                         }
                     });
                     if (update.statusCode === 200) {
-
                         //@ts-ignore
                         setCurrentSong((prev: any) => ({
                             ...prev,
                             totalListen: update.data
-
                         }));
                     }
-
                     hasTrackedViewRef.current = true;
                     console.log(`Đã gửi yêu cầu cập nhật lượt xem cho bài hát ${props.song.name}`);
 
                     router.refresh();
-
-
                 } catch (error) {
                     console.error(error);
 

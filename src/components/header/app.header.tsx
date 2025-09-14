@@ -165,7 +165,7 @@ export default function Header() {
                     }
                 }}>
                 <Avatar />
-                <Link href={`/detail/${session?.user?._id}`}>Profiles</Link>
+                <Link href={`/detail/${session?.user?._id}`}>Trang cá nhân</Link>
             </MenuItem>
             <Divider />
             <MenuItem
@@ -179,7 +179,7 @@ export default function Header() {
                 <PlaylistAddIcon sx={{ mr: 1 }} />
 
                 <Link href={`/utils/${2}`}  >
-                    PlayLists</Link>
+                    Danh sách phát</Link>
             </MenuItem>
             <MenuItem
                 sx={{
@@ -204,7 +204,7 @@ export default function Header() {
 
                 <HistoryIcon fontSize="small" sx={{ mr: 1 }} />
                 <Link href={`/utils/${0}`}  >
-                    Historys</Link>
+                    Lịch sử</Link>
 
             </MenuItem>
 
@@ -219,7 +219,7 @@ export default function Header() {
                     <PersonAdd fontSize="small" />
                 </ListItemIcon>
                 <Link href={`/utils/${4}`} >
-                    Group</Link>
+                    Nhóm</Link>
 
 
             </MenuItem>
@@ -233,7 +233,7 @@ export default function Header() {
                 <ListItemIcon>
                     <Logout fontSize="small" />
                 </ListItemIcon>
-                SignOut
+                Đăng xuất
             </MenuItem>
         </Menu>
     );
